@@ -98,7 +98,6 @@ export default function Dashboard() {
                       <TableCell>Data</TableCell>
                       <TableCell align="center">Conta</TableCell>
                       <TableCell align="center">Descrição</TableCell>
-                      <TableCell align="center">Tipo</TableCell>
                       <TableCell align="right">Valor</TableCell>
                     </TableRow>
                   </TableHead>
@@ -114,17 +113,27 @@ export default function Dashboard() {
                         <TableCell align="center">
                           {lancamento.descricao}
                         </TableCell>
-                        <TableCell align="center">
-                          {lancamento.tipo === 'D' ? (
-                            <Chip label="Débito" color="secondary" />
-                          ) : (
-                            <Chip label="Crédito" color="primary" />
-                          )}
-                        </TableCell>
                         <TableCell align="right">
-                          {parseFloat(lancamento.valor).toLocaleString(
-                            'pt-br',
-                            { style: 'currency', currency: 'BRL' },
+                          {lancamento.tipo === 'C' ? (
+                            <Chip
+                              label={parseFloat(
+                                lancamento.valor,
+                              ).toLocaleString('pt-br', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              })}
+                              color="primary"
+                            />
+                          ) : (
+                            <Chip
+                              label={parseFloat(
+                                lancamento.valor,
+                              ).toLocaleString('pt-br', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              })}
+                              color="secondary"
+                            />
                           )}
                         </TableCell>
                       </TableRow>
