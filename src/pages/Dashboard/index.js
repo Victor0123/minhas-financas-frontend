@@ -1,13 +1,12 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
   Container,
   Grid,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -18,51 +17,34 @@ import {
   List,
   ListItem,
   ListItemText,
+  Modal,
+  Fab,
+  AppBar,
+  Toolbar,
 } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 import DatePicker from 'react-datepicker';
+import { useStyles, StyledTableCell, StyledTableRow } from './style';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import Menu from '../../components/menu';
 import Footer from '../../components/footer';
 import api from '../../services/api';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-    marginBottom: 20,
-  },
-  list: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-  button: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50 + rand();
+  const left = 50 + rand();
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
 
 export default function Dashboard() {
   const classes = useStyles();
@@ -71,6 +53,21 @@ export default function Dashboard() {
   const [totalizadores, setTotalizadores] = useState([]);
   const [year, setYear] = useState(new Date());
   const [selectMonth, setSelectMonth] = useState('01');
+  const [open, setOpen] = useState(false);
+  const [modalStyle] = useState(getModalStyle);
+  const [data, setData] = useState('');
+  const [valor, setValor] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [conta, setConta] = useState('');
+  const [tipo, setTipo] = useState('');
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     async function loadLancamentos() {
@@ -83,6 +80,65 @@ export default function Dashboard() {
     loadLancamentos();
   }, [selectMonth, year]);
 
+  const modalBody = (
+    <div style={modalStyle} className={classes.modal}>
+      <h2 id="simple-modal-title">Novo lançamento</h2>
+      <form>
+        <label htmlFor="data">Data</label>
+        <br />
+        <input
+          name="data"
+          type="text"
+          placeholder="AAAA/MM/DD"
+          onChange={e => setData(e.target.value)}
+          value={data}
+        />
+        <br />
+        <label htmlFor="valor">Valor</label>
+        <br />
+        <input
+          name="valor"
+          type="text"
+          placeholder="Valor"
+          onChange={e => setValor(e.target.value)}
+          value={valor}
+        />
+        <br />
+        <label htmlFor="descricao">Descrição</label>
+        <br />
+        <input
+          name="descriçao"
+          type="text"
+          placeholder="Descrição"
+          onChange={e => setDescricao(e.target.value)}
+          value={descricao}
+        />
+        <br />
+        <label htmlFor="conta">Conta</label>
+        <br />
+        <input
+          name="conta"
+          type="text"
+          placeholder="Conta"
+          onChange={e => setConta(e.target.value)}
+          value={conta}
+        />
+        <br />
+        <label htmlFor="tipo">Tipo</label>
+        <br />
+        <input
+          name="tipo"
+          type="text"
+          placeholder="C ou D"
+          onChange={e => setTipo(e.target.value)}
+          value={tipo}
+        />
+        <br />
+        <button type="button">Adicionar</button>
+      </form>
+    </div>
+  );
+
   return (
     <div className={classes.root}>
       <Menu />
@@ -90,44 +146,7 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            <Grid>
-              <Paper className={classes.paper}>
-                <h3>Totalizadores</h3>
-                <List className={classes.list}>
-                  {totalizadores.map(totalizador => (
-                    <ListItem key={totalizador.id}>
-                      <ListItemText
-                        primary={totalizador.conta}
-                        secondary={
-                          totalizador.valor > 0 ? (
-                            <Chip
-                              label={parseFloat(
-                                totalizador.valor,
-                              ).toLocaleString('pt-br', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              })}
-                              color="primary"
-                            />
-                          ) : (
-                            <Chip
-                              label={parseFloat(
-                                totalizador.valor,
-                              ).toLocaleString('pt-br', {
-                                style: 'currency',
-                                currency: 'BRL',
-                              })}
-                              color="secondary"
-                            />
-                          )
-                        }
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.tableBar}>
               <DatePicker
                 selected={year}
                 onChange={date => setYear(date)}
@@ -154,31 +173,52 @@ export default function Dashboard() {
                   <Button onClick={() => setSelectMonth('12')}>Dez</Button>
                 </ButtonGroup>
               </div>
+              <div>
+                <Fab
+                  color="primary"
+                  aria-label="add"
+                  className={classes.buttonAdd}
+                >
+                  <AddIcon onClick={handleOpen} />
+                </Fab>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  {modalBody}
+                </Modal>
+              </div>
             </Grid>
             <Grid item xs={12}>
               <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
                   <TableHead>
                     <TableRow>
-                      <TableCell>Data</TableCell>
-                      <TableCell align="center">Conta</TableCell>
-                      <TableCell align="center">Descrição</TableCell>
-                      <TableCell align="right">Valor</TableCell>
+                      <StyledTableCell>Data</StyledTableCell>
+                      <StyledTableCell align="center">Conta</StyledTableCell>
+                      <StyledTableCell align="center">
+                        Descrição
+                      </StyledTableCell>
+                      <StyledTableCell align="right">Valor</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {lancamentos.map(lancamento => (
-                      <TableRow key={lancamento.id}>
-                        <TableCell component="th" scope="row">
+                      <StyledTableRow key={lancamento.id}>
+                        <StyledTableCell component="th" scope="row">
                           {new Date(lancamento.data).toLocaleDateString(
                             'pt-br',
                           )}
-                        </TableCell>
-                        <TableCell align="center">{lancamento.conta}</TableCell>
-                        <TableCell align="center">
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {lancamento.conta}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
                           {lancamento.descricao}
-                        </TableCell>
-                        <TableCell align="right">
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
                           {lancamento.tipo === 'C' ? (
                             <Chip
                               label={parseFloat(
@@ -200,12 +240,50 @@ export default function Dashboard() {
                               color="secondary"
                             />
                           )}
-                        </TableCell>
-                      </TableRow>
+                        </StyledTableCell>
+                      </StyledTableRow>
                     ))}
                   </TableBody>
                 </Table>
               </TableContainer>
+            </Grid>
+            <Grid>
+              <AppBar className={classes.appBar}>
+                <Toolbar>
+                  <List className={classes.list}>
+                    {totalizadores.map(totalizador => (
+                      <ListItem key={totalizador.id}>
+                        <ListItemText
+                          primary={totalizador.conta}
+                          secondary={
+                            totalizador.valor > 0 ? (
+                              <Chip
+                                label={parseFloat(
+                                  totalizador.valor,
+                                ).toLocaleString('pt-br', {
+                                  style: 'currency',
+                                  currency: 'BRL',
+                                })}
+                                color="primary"
+                              />
+                            ) : (
+                              <Chip
+                                label={parseFloat(
+                                  totalizador.valor,
+                                ).toLocaleString('pt-br', {
+                                  style: 'currency',
+                                  currency: 'BRL',
+                                })}
+                                color="secondary"
+                              />
+                            )
+                          }
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Toolbar>
+              </AppBar>
             </Grid>
           </Grid>
           <Box pt={4}>
