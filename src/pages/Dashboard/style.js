@@ -57,6 +57,12 @@ export const useStyles = makeStyles(theme => ({
   buttonAdd: {
     marginLeft: 10,
   },
+  form: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
 }));
 
 export const StyledTableCell = withStyles(theme => ({

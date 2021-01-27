@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -21,6 +20,7 @@ import {
   Fab,
   AppBar,
   Toolbar,
+  TextField,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DatePicker from 'react-datepicker';
@@ -30,6 +30,17 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Menu from '../../components/menu';
 import Footer from '../../components/footer';
 import api from '../../services/api';
+
+const tipos = [
+  {
+    value: 'C',
+    label: 'Crédito',
+  },
+  {
+    value: 'D',
+    label: 'Débito',
+  },
+];
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -48,18 +59,20 @@ function getModalStyle() {
 
 export default function Dashboard() {
   const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
 
   const [lancamentos, setLancamentos] = useState([]);
   const [totalizadores, setTotalizadores] = useState([]);
   const [year, setYear] = useState(new Date());
   const [selectMonth, setSelectMonth] = useState('01');
   const [open, setOpen] = useState(false);
-  const [modalStyle] = useState(getModalStyle);
-  const [data, setData] = useState('');
-  const [valor, setValor] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [conta, setConta] = useState('');
-  const [tipo, setTipo] = useState('');
+  const [campos, setCampos] = useState({
+    data: '',
+    valor: '',
+    descricao: '',
+    conta: '',
+    tipo: '',
+  });
 
   const handleOpen = () => {
     setOpen(true);
@@ -67,6 +80,16 @@ export default function Dashboard() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleInputChange = event => {
+    campos[event.target.name] = event.target.value;
+    setCampos(campos);
+  };
+
+  const handleFormSubmit = event => {
+    event.preventDefault();
+    api.post('/lancamento', campos);
   };
 
   useEffect(() => {
@@ -83,58 +106,70 @@ export default function Dashboard() {
   const modalBody = (
     <div style={modalStyle} className={classes.modal}>
       <h2 id="simple-modal-title">Novo lançamento</h2>
-      <form>
-        <label htmlFor="data">Data</label>
-        <br />
-        <input
+      <form
+        onSubmit={handleFormSubmit}
+        className={classes.form}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField
+          id="data"
           name="data"
-          type="text"
-          placeholder="AAAA/MM/DD"
-          onChange={e => setData(e.target.value)}
-          value={data}
+          label="Data"
+          type="date"
+          onChange={handleInputChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
         <br />
-        <label htmlFor="valor">Valor</label>
-        <br />
-        <input
+        <TextField
+          id="valor"
           name="valor"
-          type="text"
-          placeholder="Valor"
-          onChange={e => setValor(e.target.value)}
-          value={valor}
+          label="Valor"
+          placeholder="Ex: 99.99"
+          onChange={handleInputChange}
+          variant="outlined"
         />
         <br />
-        <label htmlFor="descricao">Descrição</label>
-        <br />
-        <input
-          name="descriçao"
-          type="text"
-          placeholder="Descrição"
-          onChange={e => setDescricao(e.target.value)}
-          value={descricao}
+        <TextField
+          id="descricao"
+          name="descricao"
+          label="Descrição"
+          placeholder="Ex: Pagamento Netflix"
+          onChange={handleInputChange}
+          variant="outlined"
         />
         <br />
-        <label htmlFor="conta">Conta</label>
-        <br />
-        <input
+        <TextField
+          id="conta"
           name="conta"
-          type="text"
-          placeholder="Conta"
-          onChange={e => setConta(e.target.value)}
-          value={conta}
+          label="Conta"
+          placeholder="Ex: Itau"
+          onChange={handleInputChange}
+          variant="outlined"
         />
         <br />
-        <label htmlFor="tipo">Tipo</label>
-        <br />
-        <input
+        <TextField
+          id="tipo"
           name="tipo"
-          type="text"
-          placeholder="C ou D"
-          onChange={e => setTipo(e.target.value)}
-          value={tipo}
-        />
+          select
+          label="Tipo"
+          onChange={handleInputChange}
+          SelectProps={{
+            native: true,
+          }}
+          helperText="Selecione o tipo do lançamento"
+          variant="outlined"
+        >
+          {tipos.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </TextField>
         <br />
-        <button type="button">Adicionar</button>
+        <button type="submit">Enviar</button>
       </form>
     </div>
   );
