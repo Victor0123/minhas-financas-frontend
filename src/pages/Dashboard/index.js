@@ -33,6 +33,10 @@ import api from '../../services/api';
 
 const tipos = [
   {
+    value: '',
+    label: '',
+  },
+  {
     value: 'C',
     label: 'Crédito',
   },
@@ -169,7 +173,9 @@ export default function Dashboard() {
           ))}
         </TextField>
         <br />
-        <button type="submit">Enviar</button>
+        <Button type="submit" color="primary" variant="contained">
+          Enviar
+        </Button>
       </form>
     </div>
   );
