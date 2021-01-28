@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Moment from 'moment';
 
 import {
   Box,
@@ -249,9 +250,7 @@ export default function Dashboard() {
                     {lancamentos.map(lancamento => (
                       <StyledTableRow key={lancamento.id}>
                         <StyledTableCell component="th" scope="row">
-                          {new Date(lancamento.data).toLocaleDateString(
-                            'pt-br',
-                          )}
+                          {Moment(lancamento.data).format('DD/MM/YYYY')}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           {lancamento.conta}
@@ -293,7 +292,7 @@ export default function Dashboard() {
                 <Toolbar>
                   <List className={classes.list}>
                     {totalizadores.map(totalizador => (
-                      <ListItem key={totalizador.id}>
+                      <ListItem key={totalizador.conta}>
                         <ListItemText
                           primary={totalizador.conta}
                           secondary={
