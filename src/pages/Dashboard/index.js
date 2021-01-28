@@ -25,7 +25,12 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import DatePicker from 'react-datepicker';
-import { useStyles, StyledTableCell, StyledTableRow } from './style';
+import {
+  useStyles,
+  StyledTableCell,
+  StyledTableRow,
+  getModalStyle,
+} from './style';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import Menu from '../../components/menu';
@@ -46,21 +51,6 @@ const tipos = [
     label: 'Débito',
   },
 ];
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 export default function Dashboard() {
   const classes = useStyles();
