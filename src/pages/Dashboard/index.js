@@ -33,7 +33,7 @@ import {
 } from './style';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import Menu from '../../components/menu';
+import Menu from '../../components/Menu/menu';
 import Footer from '../../components/footer';
 import api from '../../services/api';
 
