@@ -85,6 +85,8 @@ export default function Dashboard() {
   const handleFormSubmit = event => {
     event.preventDefault();
     api.post('/lancamento', campos);
+    const frm = document.getElementsByName('novo-lancamento')[0];
+    frm.reset();
   };
 
   useEffect(() => {
@@ -96,12 +98,13 @@ export default function Dashboard() {
       setTotalizadores(response.data.Totalizadores);
     }
     loadLancamentos();
-  }, [selectMonth, year]);
+  }, [selectMonth, year, open]);
 
   const modalBody = (
     <div style={modalStyle} className={classes.modal}>
       <h2 id="simple-modal-title">Novo lançamento</h2>
       <form
+        name="novo-lancamento"
         onSubmit={handleFormSubmit}
         className={classes.form}
         noValidate
