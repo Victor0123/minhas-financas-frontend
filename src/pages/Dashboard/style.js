@@ -83,17 +83,13 @@ export const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 export function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 40;
+  const left = 50;
 
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    transform: `translate(-${57}%, -${40}%)`,
   };
 }
