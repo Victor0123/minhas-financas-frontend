@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import { useStyles } from './style';
-import Footer from '../../components/footer';
+import Footer from '~/components/footer';
 
 export default function SignIn() {
   const classes = useStyles();

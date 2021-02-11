@@ -33,9 +33,9 @@ import {
 } from './style';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import Menu from '../../components/Menu/menu';
-import Footer from '../../components/footer';
-import api from '../../services/api';
+import Menu from '~/components/Menu/menu';
+import Footer from '~/components/footer';
+import api from '~/services/api';
 
 const tipos = [
   {
