@@ -41,6 +41,7 @@
     "arrow-parens": "off",
     "react/no-unused-state": "off",
     "react/jsx-props-no-spreading": "off",
+    "no-console": "off",
     "camelcase": "off"
   },
   "settings": {

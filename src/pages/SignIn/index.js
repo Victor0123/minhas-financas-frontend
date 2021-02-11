@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Avatar,
   Button,
@@ -6,12 +6,10 @@ import {
   Box,
   Typography,
   Container,
+  Link,
+  Grid,
   CssBaseline,
 } from '@material-ui/core';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 import { useStyles } from './style';
@@ -19,6 +17,21 @@ import Footer from '~/components/footer';
 
 export default function SignIn() {
   const classes = useStyles();
+
+  const [signin, setSignin] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleInputChange = event => {
+    signin[event.target.name] = event.target.value;
+    setSignin(signin);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    console.log(signin);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -30,11 +43,12 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
             required
+            onChange={handleInputChange}
             fullWidth
             id="email"
             label="Digite seu email"
@@ -44,6 +58,7 @@ export default function SignIn() {
             variant="outlined"
             margin="normal"
             required
+            onChange={handleInputChange}
             fullWidth
             name="password"
             label="Digite sua senha"
