@@ -71,7 +71,7 @@ export default function SignUp() {
                 id="email"
                 label="Email"
                 name="email"
-                autoComplete="email"
+                type="email"
               />
             </Grid>
             <Grid item xs={12}>

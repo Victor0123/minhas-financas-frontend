@@ -60,6 +60,7 @@ export default function SignIn() {
             id="email"
             label="Digite seu email"
             name="email"
+            type="email"
           />
           <TextField
             variant="outlined"

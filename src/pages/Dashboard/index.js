@@ -114,6 +114,7 @@ export default function Dashboard() {
           id="data"
           name="data"
           label="Data"
+          required
           type="date"
           onChange={handleInputChange}
           InputLabelProps={{
@@ -125,6 +126,7 @@ export default function Dashboard() {
           id="valor"
           name="valor"
           label="Valor"
+          required
           placeholder="Ex: 99.99"
           onChange={handleInputChange}
           variant="outlined"
@@ -134,6 +136,7 @@ export default function Dashboard() {
           id="descricao"
           name="descricao"
           label="Descrição"
+          required
           placeholder="Ex: Pagamento Netflix"
           onChange={handleInputChange}
           variant="outlined"
@@ -143,6 +146,7 @@ export default function Dashboard() {
           id="conta"
           name="conta"
           label="Conta"
+          required
           placeholder="Ex: Itau"
           onChange={handleInputChange}
           variant="outlined"
@@ -153,6 +157,7 @@ export default function Dashboard() {
           name="tipo"
           select
           label="Tipo"
+          required
           onChange={handleInputChange}
           SelectProps={{
             native: true,
@@ -243,7 +248,9 @@ export default function Dashboard() {
                     {lancamentos.map(lancamento => (
                       <StyledTableRow key={lancamento.id}>
                         <StyledTableCell component="th" scope="row">
-                          {Moment(lancamento.data).format('DD/MM/YYYY')}
+                          {Moment(lancamento.data)
+                            .add(1, 'd')
+                            .format('DD/MM/YYYY')}
                         </StyledTableCell>
                         <StyledTableCell align="center">
                           {lancamento.conta}

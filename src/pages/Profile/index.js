@@ -51,6 +51,7 @@ export default function Profile() {
           id="email"
           label="Seu email"
           name="email"
+          type="email"
           defaultValue={profile.email}
         />
 
