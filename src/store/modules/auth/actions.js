@@ -1,5 +1,3 @@
-import { func } from 'prop-types';
-
 export function signInRequest(email, password) {
   return {
     type: '@auth/SIGN_IN_REQUEST',
