@@ -6,6 +6,7 @@ import {
   ListSubheader,
 } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import PersonIcon from '@material-ui/icons/Person';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 
 export const mainListItems = (
@@ -15,6 +16,12 @@ export const mainListItems = (
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
+    </ListItem>
+    <ListItem button component="a" href="/profile">
+      <ListItemIcon>
+        <PersonIcon />
+      </ListItemIcon>
+      <ListItemText primary="Meu perfil" />
     </ListItem>
   </div>
 );
