@@ -83,11 +83,11 @@ export default function SignIn() {
             {loading ? <CircularProgress color="secondary" /> : 'Entrar'}
           </Button>
           <Grid container>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Link href="/" variant="body2">
-                Forgot password?
+                Esqueceu sua senha?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
               <Link href="/register" variant="body2">
                 Ainda não tem uma conta?
