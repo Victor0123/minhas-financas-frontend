@@ -6,11 +6,12 @@ import './config/ReactotronConfig';
 import store from './store';
 
 import Routes from './routes';
+import history from './services/history';
 
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <Routes />
       </Router>
     </Provider>

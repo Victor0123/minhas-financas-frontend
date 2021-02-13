@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Avatar,
   Button,
@@ -12,11 +13,14 @@ import {
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
+import { signInRequest } from '../../store/modules/auth/actions';
 import { useStyles } from './style';
 import Footer from '../../components/footer';
 
 export default function SignIn() {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
 
   const [signin, setSignin] = useState({
     email: '',
@@ -30,7 +34,8 @@ export default function SignIn() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(signin);
+    const { email, password } = signin;
+    dispatch(signInRequest(email, password));
   };
 
   return (
