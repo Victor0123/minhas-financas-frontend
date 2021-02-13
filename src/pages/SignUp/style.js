@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 export const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
