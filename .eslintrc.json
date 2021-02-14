@@ -40,6 +40,10 @@
     "object-curly-newline": "off",
     "arrow-parens": "off",
     "react/no-unused-state": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-console": "off",
+    "operator-linebreak": "off",
+    "no-param-reassign": "off",
     "camelcase": "off"
   }
 }

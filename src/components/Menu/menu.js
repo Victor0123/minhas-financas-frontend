@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import {
   Typography,
@@ -8,15 +9,23 @@ import {
   AppBar,
   Toolbar,
   IconButton,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListSubheader,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import { useStyles } from './style';
-import { mainListItems, secondaryListItems } from './listMenu';
+import { mainListItems } from './listMenu';
+
+import { signOut } from '../../store/modules/auth/actions';
 
 export default function Menu() {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -26,6 +35,10 @@ export default function Menu() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  function handleSignOut() {
+    dispatch(signOut());
+  }
 
   return (
     <>
@@ -72,7 +85,15 @@ export default function Menu() {
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <ListSubheader inset>opções</ListSubheader>
+          <ListItem button onClick={handleSignOut}>
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText primary="Sair" />
+          </ListItem>
+        </List>
       </Drawer>
     </>
   );

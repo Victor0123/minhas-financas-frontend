@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-} from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ExitToApp from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
 
 export const mainListItems = (
   <div>
@@ -16,17 +11,11 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItem>
-  </div>
-);
-
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>opções</ListSubheader>
-    <ListItem button component="a" href="/">
+    <ListItem button component="a" href="/profile">
       <ListItemIcon>
-        <ExitToApp />
+        <PersonIcon />
       </ListItemIcon>
-      <ListItemText primary="Sair" />
+      <ListItemText primary="Meu perfil" />
     </ListItem>
   </div>
 );
