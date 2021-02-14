@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Avatar,
   Button,
@@ -9,6 +9,7 @@ import {
   Box,
   Typography,
   Container,
+  CircularProgress,
   CssBaseline,
 } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -21,6 +22,7 @@ export default function SignUp() {
   const classes = useStyles();
 
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   const [signUp, setSignUp] = useState({
     name: '',
@@ -94,7 +96,7 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
           >
-            Cadastrar
+            {loading ? <CircularProgress color="secondary" /> : 'Cadastrar'}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
