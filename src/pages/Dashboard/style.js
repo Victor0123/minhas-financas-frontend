@@ -63,6 +63,20 @@ export const useStyles = makeStyles(theme => ({
       width: '25ch',
     },
   },
+  formEdit: {
+    marginLeft: 130,
+    marginTop: 100,
+  },
+  submit: {
+    marginTop: 10,
+    height: 50,
+  },
+  titulo: {
+    marginLeft: 350,
+  },
+  warning: {
+    marginLeft: 250,
+  },
 }));
 
 export const StyledTableCell = withStyles(theme => ({
