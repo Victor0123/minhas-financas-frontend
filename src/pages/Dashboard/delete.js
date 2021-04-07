@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Moment from 'moment';
 import { toast } from 'react-toastify';
 
-import { TextField, Button, Box } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield';
 
 import { useParams } from 'react-router-dom';
 import { useStyles } from './style';
@@ -73,12 +74,14 @@ export default function Profile() {
           name="descricao"
           value={lancamento.descricao}
         />
-        <TextField
+        <CurrencyTextField
           variant="outlined"
           margin="normal"
           fullWidth
+          currencySymbol="R$"
+          textAlign="left"
           id="valor"
-          label="Valor Ex:99.99"
+          label="Valor"
           name="valor"
           value={lancamento.valor}
         />
@@ -89,7 +92,7 @@ export default function Profile() {
           id="tipo"
           label="Tipo"
           name="tipo"
-          value={lancamento.tipo}
+          value={lancamento.tipo === 'C' ? 'Crédito' : 'Débito'}
         />
         <Button
           type="submit"
