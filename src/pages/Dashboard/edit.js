@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Moment from 'moment';
 import { toast } from 'react-toastify';
 
-import { TextField, Button, Box } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield';
 
 import { useParams } from 'react-router-dom';
 import { useStyles } from './style';
@@ -56,6 +57,7 @@ export default function Profile() {
 
   const handleSubmit = event => {
     event.preventDefault();
+    lancamento.valor = lancamento.valor.replace(',', '');
     lancamento.updatedAt = new Date();
     api.put(`/lancamento/${idLancamento}`, lancamento);
     toast.success('Lançamento Atualizado');
@@ -97,14 +99,18 @@ export default function Profile() {
           label={lancamento.descricao}
           name="descricao"
         />
-        <TextField
+        <CurrencyTextField
           variant="outlined"
           margin="normal"
           onChange={handleInputChange}
           fullWidth
+          currencySymbol="R$"
+          outputFormat="string"
+          textAlign="left"
           id="valor"
-          label={lancamento.valor}
+          label="Valor"
           name="valor"
+          value={lancamento.valor}
         />
         <TextField
           variant="outlined"

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
-import { toast } from 'react-toastify';
 
 import {
   Box,
@@ -24,6 +23,7 @@ import {
   Toolbar,
   TextField,
 } from '@material-ui/core';
+import CurrencyTextField from '@unicef/material-ui-currency-textfield';
 import AddIcon from '@material-ui/icons/Add';
 import DatePicker from 'react-datepicker';
 import {
@@ -85,10 +85,10 @@ export default function Dashboard() {
 
   const handleFormSubmit = event => {
     event.preventDefault();
+    campos.valor = campos.valor.replace(',', '');
     api.post('/lancamento', campos);
     const frm = document.getElementsByName('novo-lancamento')[0];
     frm.reset();
-    toast.success('Lançamento adicionado');
   };
 
   useEffect(() => {
@@ -124,12 +124,15 @@ export default function Dashboard() {
           }}
         />
         <br />
-        <TextField
+        <CurrencyTextField
           id="valor"
           name="valor"
           label="Valor"
           required
-          placeholder="Ex: 99.99"
+          currencySymbol="R$"
+          outputFormat="string"
+          textAlign="left"
+          placeholder="99.99"
           onChange={handleInputChange}
           variant="outlined"
         />
