@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Moment from 'moment';
+import { toast } from 'react-toastify';
 
 import {
   Box,
@@ -87,6 +88,7 @@ export default function Dashboard() {
     api.post('/lancamento', campos);
     const frm = document.getElementsByName('novo-lancamento')[0];
     frm.reset();
+    toast.success('Lançamento adicionado');
   };
 
   useEffect(() => {
@@ -241,7 +243,8 @@ export default function Dashboard() {
                       <StyledTableCell align="center">
                         Descrição
                       </StyledTableCell>
-                      <StyledTableCell align="right">Valor</StyledTableCell>
+                      <StyledTableCell align="center">Valor</StyledTableCell>
+                      <StyledTableCell align="center">Opções</StyledTableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -258,7 +261,7 @@ export default function Dashboard() {
                         <StyledTableCell align="center">
                           {lancamento.descricao}
                         </StyledTableCell>
-                        <StyledTableCell align="right">
+                        <StyledTableCell align="center">
                           {lancamento.tipo === 'C' ? (
                             <Chip
                               label={parseFloat(
@@ -280,6 +283,25 @@ export default function Dashboard() {
                               color="secondary"
                             />
                           )}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          <ButtonGroup
+                            size="small"
+                            aria-label="small outlined button group"
+                          >
+                            <Button
+                              color="primary"
+                              href={`/dashboard/editar/${lancamento.id}`}
+                            >
+                              Editar
+                            </Button>
+                            <Button
+                              color="secondary"
+                              href={`/dashboard/delete/${lancamento.id}`}
+                            >
+                              Excluir
+                            </Button>
+                          </ButtonGroup>
                         </StyledTableCell>
                       </StyledTableRow>
                     ))}
