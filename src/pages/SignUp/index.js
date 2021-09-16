@@ -24,10 +24,12 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.auth.loading);
 
+  const contrycode = '+55';
   const [signUp, setSignUp] = useState({
     name: '',
     email: '',
     password: '',
+    phone: '',
   });
 
   const handleInputChange = event => {
@@ -38,7 +40,8 @@ export default function SignUp() {
   const handleSubmit = event => {
     event.preventDefault();
     const { name, email, password } = signUp;
-    dispatch(signUpRequest(name, email, password));
+    const phone = contrycode + signUp.phone;
+    dispatch(signUpRequest(name, email, password, phone));
   };
 
   return (
@@ -86,6 +89,17 @@ export default function SignUp() {
                 label="Senha"
                 type="password"
                 id="password"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                onChange={handleInputChange}
+                fullWidth
+                name="phone"
+                label="Telefone"
+                id="phone"
               />
             </Grid>
           </Grid>
