@@ -15,7 +15,6 @@ export default function Profile() {
   const [profile, setProfile] = useState({
     name: useSelector(state => state.user.profile.name),
     email: useSelector(state => state.user.profile.email),
-    phone: useSelector(state => state.user.profile.phone_number),
   });
 
   const handleInputChange = event => {
@@ -54,17 +53,6 @@ export default function Profile() {
           name="email"
           type="email"
           defaultValue={profile.email}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          onChange={handleInputChange}
-          fullWidth
-          id="phone_number"
-          label="Seu Telefone"
-          name="phone_number"
-          defaultValue={profile.phone}
         />
 
         <hr />

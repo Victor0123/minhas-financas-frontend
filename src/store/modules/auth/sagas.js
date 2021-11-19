@@ -30,13 +30,12 @@ export function* signIn({ payload }) {
 
 export function* signUp({ payload }) {
   try {
-    const { name, email, password, phone } = payload;
+    const { name, email, password } = payload;
 
     yield call(api.post, 'users', {
       name,
       email,
       password,
-      phone,
     });
     toast.success('Cadastro realizado!');
     yield put(signFailure());
