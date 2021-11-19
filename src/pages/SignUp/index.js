@@ -24,40 +24,21 @@ export default function SignUp() {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.auth.loading);
 
-  const pais = [
-    {
-      value: '',
-      label: '',
-    },
-    {
-      value: '+55',
-      label: 'Brasil',
-    },
-    {
-      value: '+351',
-      label: 'Portugal',
-    },
-  ];
-
-  const contrycode = { contrycode: '' };
   const [signUp, setSignUp] = useState({
     name: '',
     email: '',
     password: '',
-    phone: '',
   });
 
   const handleInputChange = event => {
     signUp[event.target.name] = event.target.value;
-    contrycode[event.target.name] = event.target.value;
     setSignUp(signUp);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
     const { name, email, password } = signUp;
-    const phone = contrycode.contrycode + signUp.phone;
-    dispatch(signUpRequest(name, email, password, phone));
+    dispatch(signUpRequest(name, email, password));
   };
 
   return (
@@ -105,36 +86,6 @@ export default function SignUp() {
                 label="Senha"
                 type="password"
                 id="password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                id="contrycode"
-                name="contrycode"
-                select
-                label="País"
-                required
-                onChange={handleInputChange}
-                SelectProps={{
-                  native: true,
-                }}
-                helperText="Selecione o país correspondente ao seu número de telefone"
-                variant="outlined"
-              >
-                {pais.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-              <TextField
-                variant="outlined"
-                required
-                onChange={handleInputChange}
-                fullWidth
-                name="phone"
-                label="Telefone"
-                id="phone"
               />
             </Grid>
           </Grid>
